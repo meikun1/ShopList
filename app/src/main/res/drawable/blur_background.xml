@@ -1,0 +1,3 @@
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+    android:src="@drawable/image3"
+    android:alpha="0.8" />

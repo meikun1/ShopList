@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">shop list</string>
+    <string name="password_field_description">Пароль</string>
+    <string name="email_field_description">Адрес электронной почты</string>
+    <string name="button_text">Login</string>
+    <string name="password_hint">Password</string>
+    <string name="dont_have_account_text">Dont have an account?</string>
+    <string name="Register">Register</string>
+    <string name="background_image_description">Background image description</string>
+    <string name="card_content_description">card_content_description</string>
+    <string name="forgot_password_content_description">Forgot password?</string>
+    <string name="username_hint">Username</string>
+    <string name="rememberCheckBox">Remember me</string>
+    <string name="loginTextView">Login</string>
+
+
+</resources>

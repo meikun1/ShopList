@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/button"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/image3">
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="356dp"
+        android:layout_height="459dp"
+        android:layout_margin="16dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/card_content_description"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/backgroundImageView"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.5"
+            android:contentDescription="@string/background_image_description"
+            android:scaleType="centerCrop"
+            android:src="@drawable/image2"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/myConstraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/blur_background"
+            android:scaleType="centerCrop">
+
+
+            <EditText
+                android:id="@+id/passwordEditText"
+                android:layout_width="242dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:autofillHints="password"
+                android:background="@drawable/edittext_border"
+                android:hint="@string/password_hint"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.536"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.449" />
+
+
+            <CheckBox
+                android:id="@+id/rememberCheckBox"
+                android:layout_width="152dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="45dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/rememberCheckBox"
+                android:textColor="#FFFFFF"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
+
+            <Button
+                android:id="@+id/MyButton"
+                android:layout_width="224dp"
+                android:layout_height="50dp"
+                android:background="@drawable/edittext_border"
+                android:onClick="loginButtonClicked"
+                android:text="@string/button_text"
+                android:textColor="@android:color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.789" />
+
+
+            <TextView
+                android:id="@+id/dontHaveAccountText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="52dp"
+                android:text="@string/dont_have_account_text"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.921" />
+
+
+            <TextView
+                android:id="@+id/registerLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="registerClicked"
+                android:text="@string/Register"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.2"
+                app:layout_constraintStart_toEndOf="@+id/dontHaveAccountText"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.921" />
+
+
+            <TextView
+                android:id="@+id/forgotPasswordTextView"
+                android:layout_width="118dp"
+                android:layout_height="47dp"
+                android:layout_marginTop="20dp"
+                android:clickable="true"
+                android:contentDescription="@string/forgot_password_content_description"
+                android:enabled="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:importantForAccessibility="yes"
+                android:onClick="forgotPasswordClicked"
+                android:text="@string/forgot_password_content_description"
+                android:textColor="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.864"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
+
+            <EditText
+                android:id="@+id/usernameEditText"
+                android:layout_width="242dp"
+                android:layout_height="48dp"
+                android:autofillHints="username"
+                android:background="@drawable/edittext_border"
+                android:hint="@string/username_hint"
+
+                android:inputType="text"
+                android:padding="10dp"
+                android:textColor="@android:color/white"
+                android:textColorHint="#FFFFFF"
+                app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.525"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loginTextView" />
+
+            <TextView
+                android:id="@+id/loginTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/loginTextView"
+                android:textColor="@android:color/white"
+                android:textSize="27sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/usernameEditText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.381" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

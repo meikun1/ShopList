@@ -31,7 +31,7 @@
             android:alpha="0.5"
             android:contentDescription="@string/background_image_description"
             android:scaleType="centerCrop"
-            android:src="@drawable/image2"
+            android:src="@drawable/image3"
             app:layout_constraintBottom_toBottomOf="parent"
 
             app:layout_constraintEnd_toEndOf="parent"

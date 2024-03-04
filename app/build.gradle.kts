@@ -36,6 +36,7 @@ android {
 }
 
 dependencies {
+    implementation("com.sun.mail:javax.mail:1.6.2")
     implementation("jp.wasabeef:glide-transformations:4.3.0")
     implementation("com.github.bumptech.glide:glide:4.12.0")
     implementation("androidx.activity:activity:1.8.0")

@@ -125,7 +125,7 @@
                 android:id="@+id/loginTextView.register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/loginTextView"
+                android:text="@string/loginTextView.register"
                 android:textColor="@android:color/white"
                 android:textSize="27sp"
                 android:textStyle="bold"

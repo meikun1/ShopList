@@ -16,9 +16,6 @@
             android:name=".AfterRegistrationScreen"
             android:exported="false" />
         <activity
-            android:name=".AfterRegistrationPage"
-            android:exported="false" />
-        <activity
             android:name=".AfterLoginActivity"
             android:exported="false" />
         <activity

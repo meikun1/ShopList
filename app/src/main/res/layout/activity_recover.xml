@@ -118,7 +118,7 @@
                 app:layout_constraintVertical_bias="0.381" />
 
             <TextView
-                android:id="@+id/sendCodeText"
+                android:id="@+id/sendCodeText.recover"
                 android:layout_width="75dp"
                 android:layout_height="48dp"
                 android:clickable="true"

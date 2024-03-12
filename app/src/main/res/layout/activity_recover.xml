@@ -134,6 +134,23 @@
                 app:layout_constraintVertical_bias="0.568"
                 tools:ignore="MissingConstraints,TextSizeCheck" />
 
+            <TextView
+                android:id="@+id/CheckCodeText_recover"
+                android:layout_width="104dp"
+                android:layout_height="50dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="checkCode1"
+                android:text="@string/CheckCodeText_recover"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.8"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.571"
+                tools:ignore="MissingConstraints,TextSizeCheck" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

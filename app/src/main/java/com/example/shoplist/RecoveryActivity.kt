@@ -6,6 +6,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -27,12 +28,15 @@ class RecoveryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recover)
 
-        val emailEditText = findViewById<EditText>(R.id.usernameEditText_recover) // Получаем EditText для ввода адреса электронной почты
-        val codeEditText = findViewById<EditText>(R.id.codeEditText_recover) // Получаем EditText для ввода кода
+        val emailEditText =
+            findViewById<EditText>(R.id.usernameEditText_recover) // Получаем EditText для ввода адреса электронной почты
+        val codeEditText =
+            findViewById<EditText>(R.id.codeEditText_recover) // Получаем EditText для ввода кода
         val sendCodeText = findViewById<TextView>(R.id.sendCodeText_recover)
 
         sendCodeText.setOnClickListener {
-            email = emailEditText.text.toString() // Получаем введенный пользователем адрес электронной почты
+            email =
+                emailEditText.text.toString() // Получаем введенный пользователем адрес электронной почты
             generatedCode = generateRandomCode() // Генерируем случайный код
             SendEmailTask().execute()
         }
@@ -40,7 +44,10 @@ class RecoveryActivity : AppCompatActivity() {
 
     private fun generateRandomCode(): String {
         val random = Random()
-        return String.format("%04d", random.nextInt(10000)) // Генерируем случайное четырехзначное число
+        return String.format(
+            "%04d",
+            random.nextInt(10000)
+        ) // Генерируем случайное четырехзначное число
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -80,25 +87,30 @@ class RecoveryActivity : AppCompatActivity() {
             }
         }
 
+        private var isEmailSent = false // Флаг, указывающий на успешную отправку письма
+
         @Deprecated("Deprecated in Java")
         override fun onPostExecute(result: Boolean) {
             super.onPostExecute(result)
-            if (result) {
-                // Письмо успешно отправлено, выполните необходимые действия
-                val codeEditText = findViewById<EditText>(R.id.codeEditText_recover) // Получаем EditText для ввода кода
-                val userEnteredCode = codeEditText.text.toString() // Получаем введенный пользователем код
-
-                if (userEnteredCode == generatedCode) {
-                    // Переходим на страницу first_screen
-                    startActivity(Intent(this@RecoveryActivity, MainActivity::class.java))
-                    finish() // Закрываем текущую активность
-                } else {
-                    // Отображаем сообщение об ошибке
-                    // Например, можно использовать Toast
-                    Toast.makeText(this@RecoveryActivity, "Incorrect code. Please try again.", Toast.LENGTH_SHORT).show()
-                }
+            if (isEmailSent) {
+                val codeEditText = findViewById<EditText>(R.id.codeEditText_recover)
+                val userEnteredCode = codeEditText.text.toString()
+                showToast("The email has been sent successfully.")
             } else {
-                // Ошибка отправки письма, выполните необходимые действия или покажите сообщение об ошибке
+                showToast("Error sending email. Please try again later.")
+            }
+        }
+        @Deprecated("Deprecated in Java")
+        fun checkCode1(userEnteredCode: String) {
+            if (userEnteredCode == generatedCode) {
+                showToast("Code is correct.")
+            } else {
+                showToast("Incorrect code. Please try again.")
+            }
+        }
+        private fun showToast(message: String) {
+            runOnUiThread {
+                Toast.makeText(this@RecoveryActivity, message, Toast.LENGTH_SHORT).show()
             }
         }
     }

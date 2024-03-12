@@ -47,7 +47,7 @@
 
 
             <EditText
-                android:id="@+id/passwordEditText.recover"
+                android:id="@+id/codeEditText.recover"
                 android:layout_width="242dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center"
@@ -71,17 +71,14 @@
                 android:layout_width="224dp"
                 android:layout_height="50dp"
                 android:background="@drawable/edittext_border"
-                android:onClick="loginButtonClicked"
                 android:text="@string/MyButton.recover"
-                android:textColor="@android:color/black"
+                android:textColor="#C5E1A5"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.789" />
-
-
 
 
 
@@ -97,7 +94,7 @@
                 android:padding="10dp"
                 android:textColor="@android:color/white"
                 android:textColorHint="#FFFFFF"
-                app:layout_constraintBottom_toTopOf="@+id/passwordEditText.recover"
+                app:layout_constraintBottom_toTopOf="@+id/codeEditText.recover"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.525"
                 app:layout_constraintStart_toStartOf="parent"
@@ -118,13 +115,12 @@
                 app:layout_constraintVertical_bias="0.381" />
 
             <TextView
-                android:id="@+id/sendCodeText.recover"
+                android:id="@+id/sendCodeText_recover"
                 android:layout_width="75dp"
                 android:layout_height="48dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:onClick="sendEmail"
-                android:text="@string/sendCodeText.recover"
+                android:text="@string/sendCodeText_recover"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"

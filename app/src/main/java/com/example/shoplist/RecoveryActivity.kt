@@ -4,114 +4,142 @@ package com.example.shoplist
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.AsyncTask
 import android.os.Bundle
-import android.view.View
+import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.coroutines.*
 import javax.mail.*
 import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeMessage
 import java.util.*
+import kotlin.coroutines.CoroutineContext
 import kotlin.properties.Delegates
 
-class RecoveryActivity : AppCompatActivity() {
+class RecoveryActivity : AppCompatActivity(), CoroutineScope {
 
-    private lateinit var email: String // Поле для хранения адреса электронной почты
-    private var generatedCode: String by Delegates.notNull() // Переменная для хранения сгенерированного кода
+    private lateinit var job: Job
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
+
+    private lateinit var email: String
+    private var generatedCode: String by Delegates.notNull()
+
+    private fun generateRandomCode(): String {
+        val random = Random()
+        return String.format("%04d", random.nextInt(10000))
+    }
+
+    private var isCodeCorrect = false // Флаг для отслеживания успешной проверки кода
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recover)
 
-        val emailEditText =
-            findViewById<EditText>(R.id.usernameEditText_recover) // Получаем EditText для ввода адреса электронной почты
-        val codeEditText =
-            findViewById<EditText>(R.id.codeEditText_recover) // Получаем EditText для ввода кода
+        job = Job()
+
+        val emailEditText = findViewById<EditText>(R.id.usernameEditText_recover)
+        val codeEditText = findViewById<EditText>(R.id.codeEditText_recover)
         val sendCodeText = findViewById<TextView>(R.id.sendCodeText_recover)
+        val checkCodeText = findViewById<TextView>(R.id.CheckCodeText_recover)
+        val registerButton = findViewById<Button>(R.id.MyButton_recover) // Найти кнопку Register
+
+        generatedCode = ""
 
         sendCodeText.setOnClickListener {
-            email =
-                emailEditText.text.toString() // Получаем введенный пользователем адрес электронной почты
-            generatedCode = generateRandomCode() // Генерируем случайный код
-            SendEmailTask().execute()
-        }
-    }
+            email = emailEditText.text.toString()
 
-    private fun generateRandomCode(): String {
-        val random = Random()
-        return String.format(
-            "%04d",
-            random.nextInt(10000)
-        ) // Генерируем случайное четырехзначное число
-    }
+            if (!isValidEmail(email)) {
+                showToast("Invalid email address.")
+                return@setOnClickListener
+            }
 
-    @SuppressLint("StaticFieldLeak")
-    private inner class SendEmailTask : AsyncTask<Void, Void, Boolean>() {
-        @Deprecated("Deprecated in Java")
-        override fun doInBackground(vararg params: Void?): Boolean {
-            val username = "gggjhggffc634@gmail.com"
-            val password = "mwjtvoyzfykqikcg"
-            val to = email // Используем адрес электронной почты, введенный пользователем
+            generatedCode = generateRandomCode()
 
-            val props = Properties()
-            props["mail.smtp.auth"] = "true"
-            props["mail.smtp.starttls.enable"] = "true"
-            props["mail.smtp.host"] = "smtp.gmail.com"
-            props["mail.smtp.port"] = "587"
+            launch {
+                val result = sendEmail()
 
-            val session = Session.getInstance(props, object : Authenticator() {
-                override fun getPasswordAuthentication(): PasswordAuthentication {
-                    return PasswordAuthentication(username, password)
+                if (result) {
+                    showToast("Email sent successfully. Check your inbox for the recovery code.")
+                } else {
+                    showToast("Error sending email. Please try again later.")
                 }
-            })
-
-            return try {
-                val message = MimeMessage(session)
-                message.setFrom(InternetAddress(username))
-                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to))
-                message.subject = "Test Subject"
-                message.setText("Your recovery code is: $generatedCode") // Вставляем сгенерированный код в текст сообщения
-
-                Transport.send(message)
-
-                println("Message sent successfully.")
-                true // Успешно отправлено
-            } catch (e: MessagingException) {
-                e.printStackTrace()
-                false // Ошибка отправки
             }
         }
 
-        private var isEmailSent = false // Флаг, указывающий на успешную отправку письма
+        checkCodeText.setOnClickListener {
+            val userEnteredCode = codeEditText.text.toString()
+            checkCode(userEnteredCode)
+        }
 
-        @Deprecated("Deprecated in Java")
-        override fun onPostExecute(result: Boolean) {
-            super.onPostExecute(result)
-            if (isEmailSent) {
-                val codeEditText = findViewById<EditText>(R.id.codeEditText_recover)
-                val userEnteredCode = codeEditText.text.toString()
-                showToast("The email has been sent successfully.")
+        registerButton.setOnClickListener {
+            if (isCodeCorrect) { // Проверяем флаг перед переходом
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
             } else {
-                showToast("Error sending email. Please try again later.")
+                showToast("Please enter the correct code first.")
             }
         }
-        @Deprecated("Deprecated in Java")
-        fun checkCode1(userEnteredCode: String) {
-            if (userEnteredCode == generatedCode) {
-                showToast("Code is correct.")
-            } else {
-                showToast("Incorrect code. Please try again.")
+    }
+
+    private suspend fun sendEmail(): Boolean = withContext(Dispatchers.IO) {
+        val username = "gggjhggffc634@gmail.com"
+        val password = "mwjtvoyzfykqikcg"
+        val to = email
+
+        val props = Properties()
+        props["mail.smtp.auth"] = "true"
+        props["mail.smtp.starttls.enable"] = "true"
+        props["mail.smtp.host"] = "smtp.gmail.com"
+        props["mail.smtp.port"] = "587"
+
+        val session = Session.getInstance(props, object : Authenticator() {
+            override fun getPasswordAuthentication(): PasswordAuthentication {
+                return PasswordAuthentication(username, password)
             }
+        })
+
+        return@withContext try {
+            val message = MimeMessage(session)
+            message.setFrom(InternetAddress(username))
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to))
+            message.subject = "Test Subject"
+            message.setText("Your recovery code is: $generatedCode")
+
+            Transport.send(message)
+
+            println("Message sent successfully.")
+            true
+        } catch (e: MessagingException) {
+            e.printStackTrace()
+            false
         }
-        private fun showToast(message: String) {
-            runOnUiThread {
-                Toast.makeText(this@RecoveryActivity, message, Toast.LENGTH_SHORT).show()
-            }
+    }
+
+    private fun checkCode(userEnteredCode: String) {
+        isCodeCorrect = if (userEnteredCode == generatedCode) {
+            showToast("Code is correct.")
+            true // Устанавливаем флаг в true при успешной проверке
+        } else {
+            showToast("Incorrect code. Please try again.")
+            false // Устанавливаем флаг в false при неправильном коде
         }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this@RecoveryActivity, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun isValidEmail(email: String): Boolean {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
     }
 }

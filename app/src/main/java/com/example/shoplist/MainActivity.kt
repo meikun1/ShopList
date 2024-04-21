@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         // Обработчик нажатия на текст "Forgot password?"
         forgotPasswordTextView.setOnClickListener {
-            val intent = Intent(this, RecoverActivity::class.java)
+            val intent = Intent(this, RecoveryActivity::class.java)
             startActivity(intent)
         }
 

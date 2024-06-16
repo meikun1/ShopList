@@ -8,17 +8,14 @@
     <string name="Register">Register</string>
     <string name="background_image_description">Background image description</string>
     <string name="card_content_description">card_content_description</string>
-    <string name="forgot_password_content_description">Forgot password?</string>
     <string name="username_hint">Email</string>
-    <string name="rememberCheckBox">Remember me</string>
-    <string name="loginTextView">Login</string>
-    <string name="button_text.register">Sign up</string>
     <string name="password_hint1">Accept password</string>
-    <string name="loginTextView.recover">Recovery</string>
+    <string name="loginTextView.recover">Login</string>
     <string name="passwordEditText.recover">Enter the code</string>
     <string name="sendCodeText_recover">Send Code</string>
     <string name="CheckCodeText_recover">Check the code</string>
-    <string name="MyButton.recover">Recover</string>
-    <string name="loginTextView.register">Register</string>
+    <string name="MyButton.recover">Sign in</string>
+    <string name="gorod">Ставрополь</string>
+
 
 </resources>

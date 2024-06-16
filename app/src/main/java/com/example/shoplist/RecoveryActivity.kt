@@ -78,7 +78,7 @@ class RecoveryActivity : AppCompatActivity(), CoroutineScope {
 
         registerButton.setOnClickListener {
             if (isCodeCorrect) { // Проверяем флаг перед переходом
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, AfterRegistrationScreen::class.java)
                 startActivity(intent)
             } else {
                 showToast("Please enter the correct code first.")
@@ -122,7 +122,7 @@ class RecoveryActivity : AppCompatActivity(), CoroutineScope {
 
     private fun checkCode(userEnteredCode: String) {
         isCodeCorrect = if (userEnteredCode == generatedCode) {
-            showToast("Code is correct.")
+            showToast("Code is correct. Now you can sign in.")
             true // Устанавливаем флаг в true при успешной проверке
         } else {
             showToast("Incorrect code. Please try again.")
